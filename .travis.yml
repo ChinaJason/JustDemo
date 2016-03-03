@@ -14,8 +14,8 @@ before_install:
 
 script:  
     #build the image
-    - docker build --no-cache -t ChinaJason/JustDemo .
+    - docker build --no-cache -t jasonsong74/justdemo .
     #tag the build
-    - docker tag ChinaJason/JustDemo:latest ChinaJason/JustDemo:v1
+    - docker tag jasonsong74/justdemo:latest jasonsong74/justdemo:v1
     #push the image to the repository
-    - docker push ChinaJason/JustDemo
+    - docker push jasonsong74/justdemo
