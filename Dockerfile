@@ -4,5 +4,5 @@ COPY . /app
 WORKDIR /app
 RUN ["dnu", "restore"]
 
-EXPOSE 80:5000
+EXPOSE 8090:8090
 ENTRYPOINT ["dnx", "-p", "project.json", "web"]
