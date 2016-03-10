@@ -4,5 +4,5 @@ COPY . /app
 WORKDIR /app
 RUN ["dnu", "restore"]
 
-EXPOSE 5000/tcp
+EXPOSE 80
 ENTRYPOINT ["dnx", "-p", "project.json", "web"]
