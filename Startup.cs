@@ -7,6 +7,8 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using JustDemoTest;
+using Serilog;
 
 namespace JustDemo
 {
@@ -28,14 +30,24 @@ namespace JustDemo
         {
             // Add framework services.
             services.AddMvc();
+            services.AddTransient<JustDemoContext,JustDemoContext>();   
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+           
+            var serilogLogger = new LoggerConfiguration()
+                .WriteTo
+                .TextWriter(Console.Out)
+                .MinimumLevel.Debug()
+                .Enrich.WithProperty("Environment", env.EnvironmentName)    
+                .CreateLogger();
+            //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.MinimumLevel = LogLevel.Verbose;
+            loggerFactory.AddSerilog(serilogLogger);
             loggerFactory.AddDebug();
-
+                
             app.UseIISPlatformHandler();
 
             app.UseStaticFiles();
